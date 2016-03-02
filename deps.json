@@ -1,0 +1,16 @@
+{
+    "name": "rhoban/plater",
+    "binaries": ["plater/build", "gui"],
+    "build":
+        [
+            "cd plater",
+            "mkdir build",
+            "cd build",
+            "cmake -DCMAKE_BUILD_TYPE=Release ..",
+            "make",
+            "cd ../../gui",
+            "qmake .",
+            "make"
+        ]
+
+}

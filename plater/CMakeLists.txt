@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(plater)
 find_package (Threads)
 
-set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -U__STRICT_ANSI__ -pthread")
+set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -pthread")
 
 set(ALL_SOURCES
     stl/Point3.cpp

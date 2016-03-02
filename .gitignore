@@ -1,2 +1,8 @@
+**Makefile
+gui/moc*
+gui/qrc*
+gui/ui_*
+gui/Plater
+**.o
 **.swp
 build
