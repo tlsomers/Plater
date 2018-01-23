@@ -57,6 +57,7 @@ namespace Plater
             void writeFiles(Solution *solution);
             void writeSTL(Plate *plate, const char *filename);
             void writePpm(Plate *plate, const char *filename);
+            void writePlatesInfo(Solution *solution);
         
             std::map<std::string, int> quantities;
             std::map<std::string, Part*> parts;
@@ -74,6 +75,9 @@ namespace Plater
             // Stats & solution
             int placersCount, placerCurrent;
             Solution *solution;
+
+            // Enable the plates.csv file output
+            bool platesInfo;
 
             // Number of threads
             unsigned int nbThreads;

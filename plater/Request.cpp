@@ -35,7 +35,8 @@ namespace Plater
         pattern("plate_%03d"),
         cancel(false),
         solution(NULL),
-        nbThreads(1)
+        nbThreads(1),
+        platesInfo(false)
     {
     }
 
@@ -218,6 +219,29 @@ namespace Plater
         }
     }
 
+    void Request::writePlatesInfo(Solution *solution)
+    {
+        std::ofstream ofs("plates.csv");
+
+        ofs << "plate,part,posX,posY,rotation" << std::endl;
+
+        for (int i=0; i<solution->countPlates(); i++) {
+            Plate *plate = solution->getPlate(i);
+
+            for (auto part : plate->parts) {
+                ofs << i+1 << ",";
+                ofs << part->getName() << ",";
+                ofs << part->getCenterX()/1000.0 << ",";
+                ofs << part->getCenterY()/1000.0 << ",";
+                ofs << (part->getRotation()*part->getPart()->deltaR*180.0/M_PI) << "";
+                ofs << std::endl;
+
+            }
+        }
+
+        ofs.close();
+    }
+
     void Request::writeFiles(Solution *solution)
     {
         generatedFiles.clear();
@@ -232,6 +256,13 @@ namespace Plater
                 break;
         }
 
+        // Writing plates info
+        if (platesInfo) {
+            _log("- Exporting plates.csv...\n");
+            writePlatesInfo(solution);
+        }
+
+        // Exporting each file
         char *buffer = new char[pattern.size()+64];
         for (int i=0; i<solution->countPlates(); i++) {
             Plate *plate = solution->getPlate(i);
