@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>588</width>
-    <height>467</height>
+    <width>690</width>
+    <height>553</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -387,6 +387,17 @@
          </layout>
         </item>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_12">
+          <item>
+           <widget class="QCheckBox" name="outputCsv">
+            <property name="text">
+             <string>Output plates.csv</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <spacer name="verticalSpacer_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -446,7 +457,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>588</width>
+     <width>690</width>
      <height>25</height>
     </rect>
    </property>
@@ -519,7 +530,7 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

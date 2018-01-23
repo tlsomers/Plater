@@ -198,6 +198,8 @@ void MainWindow::on_runButton_clicked()
             worker.request.mode = REQUEST_STL;
         }
 
+        worker.request.platesInfo = ui->outputCsv->isChecked();
+
         showSuccess("Working...");
         worker.start();
     } else {
