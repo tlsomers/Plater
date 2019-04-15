@@ -6,6 +6,9 @@
 #include <util.h>
 #include <viewer.h>
 #include <wizard.h>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 #if defined(_WIN32) || defined(_WIN64)
     #include <direct.h>
@@ -41,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->nbThreads->setText(QString("%1").arg(QThread::idealThreadCount()));
 
     ui->randomIterations->setEnabled(false);
+
+    // Loading config.json at startup
+    on_actionLoad_configuration_triggered();
 }
 
 MainWindow::~MainWindow()
@@ -348,4 +354,96 @@ void MainWindow::on_singleSort_clicked()
 void MainWindow::on_multipleSort_clicked()
 {
     ui->randomIterations->setEnabled(true);
+}
+
+void MainWindow::on_actionSave_configuration_triggered()
+{
+    QJsonObject json;
+
+    // Settings
+    json["plateWidth"] = ui->plateWidth->text();
+    json["plateHeight"] = ui->plateHeight->text();
+    json["circular"] = ui->circularPlate->isChecked() ? "yes" : "no";
+    json["diameter"] = ui->diameter->text();
+    json["outputDirectory"] = ui->outputDirectory->text();
+
+    // Advanced settings
+    json["partsSpacing"] = ui->spacing->text();
+    json["precision"] = ui->precision->text();
+    json["bruteForceSpacing"] = ui->bruteForceSpacing->text();
+    json["bruteForceAngle"] = ui->bruteForceAngle->text();
+    json["threads"] = ui->nbThreads->text();
+    json["sortMode"] = ui->singleSort->isChecked() ? "single" : "multiple";
+    json["randomIterations"] = ui->randomIterations->text();
+    json["outputType"] = ui->stlRadio->isChecked() ? "stl" : "csv";
+    json["outputPlatesCsv"] = ui->outputCsv->isChecked() ? "yes" : "no";
+
+    QJsonDocument doc(json);
+    QFile file("config.json");
+    file.open(QIODevice::WriteOnly);
+    file.write(doc.toJson(QJsonDocument::Indented));
+    file.close();
+}
+
+void MainWindow::on_actionLoad_configuration_triggered()
+{
+    if (QFile::exists("config.json")) {
+        QFile file("config.json");
+        file.open(QIODevice::ReadOnly);
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        if (doc.isObject())  {
+            QJsonObject json = doc.object();
+
+            // Settings
+            if (json.contains("plateWidth"))
+                ui->plateWidth->setText(json["plateWidth"].toString());
+            if (json.contains("plateHeight"))
+                ui->plateHeight->setText(json["plateHeight"].toString());
+            if (json.contains("circular")) {
+                ui->circularPlate->setChecked(json["circular"].toString() == "yes");
+            }
+            if (json.contains("diameter")) {
+                ui->diameter->setText(json["diameter"].toString());
+            }
+            if (json.contains("outputDirectory")) {
+                ui->outputDirectory->setText(json["outputDirectory"].toString());
+            }
+
+            // Advanced settings
+            if (json.contains("partsSpacing"))
+                ui->spacing->setText(json["partsSpacing"].toString());
+            if (json.contains("precision"))
+                ui->precision->setText(json["precision"].toString());
+            if (json.contains("bruteForceSpacing"))
+                ui->bruteForceSpacing->setText(json["bruteForceSpacing"].toString());
+            if (json.contains("bruteForceAngle"))
+                ui->bruteForceAngle->setText(json["bruteForceAngle"].toString());
+            if (json.contains("threads"))
+                ui->nbThreads->setText(json["threads"].toString());
+            if (json.contains("sortMode")) {
+                if (json["sortMode"].toString() == "single") {
+                    ui->singleSort->setChecked(true);
+                } else {
+                    ui->multipleSort->setChecked(true);
+                }
+            }
+            if (json.contains("randomIterations")) {
+                ui->randomIterations->setText(json["randomIterations"].toString());
+            }
+            if (json.contains("outputType")) {
+                if (json["outputType"] == "stl") {
+                    ui->stlRadio->setChecked(true);
+                } else {
+                    ui->ppmRadio->setChecked(true);
+                }
+            }
+            if (json.contains("outputPlatesCsv")) {
+                ui->outputCsv->setChecked(json["outputPlatesCsv"].toString() == "yes");
+            }
+        }
+    }
+
+    // Updating UI accordingly
+    updatePlateEnable();
+    ui->randomIterations->setEnabled(ui->multipleSort->isChecked());
 }
