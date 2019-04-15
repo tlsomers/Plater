@@ -40,6 +40,10 @@ lower is better).
 
 Hit "Run", this will generate you the STL file(s) corresponding to your plates.
 
+All the settings you change can be saved to a `config.json` file using the
+"File > config.json" menu. This file will be created in the same folder as
+plater executable and will be loaded on startup.
+
 ## With the command line
 
 Plater usage is:
