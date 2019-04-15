@@ -1,3 +1,4 @@
+#include <QIcon>
 #include "about.h"
 #include "ui_about.h"
 
