@@ -273,7 +273,7 @@ void MainWindow::on_wizard_accept()
         ui->parts->setText(parts);
     }
 
-    wizardNext();
+    QMetaObject::invokeMethod(this, &MainWindow::wizardNext, Qt::QueuedConnection);
 }
 
 void MainWindow::on_saveButton_clicked()
