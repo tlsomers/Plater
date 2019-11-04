@@ -1,5 +1,14 @@
 #include <QApplication>
 #include <QGLFormat>
+
+#if defined(QT_STATIC)
+#include <QtPlugin>
+#if defined(_WIN32)
+Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
+Q_IMPORT_PLUGIN(QWindowsVistaStylePlugin);
+#endif
+#endif
+
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])

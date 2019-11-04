@@ -1,10 +1,13 @@
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(_WIN32)
 #include <direct.h>
+#else
+#include <unistd.h>
 #endif
+#include <cctype>
 #include <iostream>
 #include <sstream>
 #include <algorithm>
-#include <unistd.h>
+#include <functional>
 #include "util.h"
 
 #if defined(_WIN32) || defined(_WIN64)
