@@ -19,6 +19,10 @@ their own plates using their own settings.
 Note that Plater will *not* choose the best orientation of a part for you, this is
 up to the user because it depends on a lot of things.
 
+Download binaries from [Release page](https://github.com/Rhoban/Plater/releases)
+
+Alternate mirror:
+
 * [Get Windows binaries (v1.1)](http://gregwar.com/plater/plater-win32-1.1.zip)
 * [Get Windows command line tool (plater.exe, v1.0)](http://gregwar.com/plater/plater-win32-tool-1.0.zip)
 * [Get Linux binaries (v1.0), Qt 4.8 and OpenGL required](http://gregwar.com/plater/plater-linux-1.0.zip)
