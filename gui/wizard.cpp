@@ -34,8 +34,6 @@ void Wizard::setOrientation(string orientation_)
     model = model.putFaceOnPlate(orientation);
     model = model.center();
 
-    Point3 maxP = model.max();
-
     if (viewer == NULL) {
         viewer = new Viewer(15);
         ui->zone->addWidget(viewer);
@@ -52,6 +50,13 @@ void Wizard::setPlateDimension(float width, float height)
 {
     if (viewer != NULL) {
         viewer->setPlateDimension(width, height);
+    }
+}
+
+void Wizard::setCircularPlateDiameter(float diameter)
+{
+    if (viewer != NULL) {
+        viewer->setCircularPlateDiameter(diameter);
     }
 }
 

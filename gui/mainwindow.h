@@ -27,6 +27,8 @@ public:
     void showSuccess(std::string msg);
     void showMessage(std::string msg);
     void wizardNext();
+    bool isCircular();
+    float getPlateDiameter();
     float getPlateWidth();
     float getPlateHeight();
 

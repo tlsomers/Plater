@@ -22,10 +22,13 @@ public:
     void wheelEvent(QWheelEvent *);
 
     void setPlateDimension(float width, float height);
+    void setCircularPlateDiameter(float diameter);
 
     Model *model;
     float t;
     float plateWidth, plateHeight;
+    float plateDiameter;
+    bool circular;
 
 public slots:
     virtual void timeOutSlot();

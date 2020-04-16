@@ -38,6 +38,11 @@ void PlatesViewer::setPlateDimension(float width, float height)
     viewer->setPlateDimension(width, height);
 }
 
+void PlatesViewer::setCircularPlateDiameter(float diameter)
+{
+    viewer->setCircularPlateDiameter(diameter);
+}
+
 void PlatesViewer::setPlates(std::vector<std::string> plates_)
 {
     plates = plates_;

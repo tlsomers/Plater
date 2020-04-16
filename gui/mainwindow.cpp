@@ -143,26 +143,33 @@ void MainWindow::wizardNext()
         connect(wizard, SIGNAL(accepted()), this, SLOT(on_wizard_accept()));
         wizard->show();
         wizard->restoreGeometry(geometry);
-        wizard->setPlateDimension(getPlateWidth(), getPlateHeight());
+
+        if (isCircular()) {
+            wizard->setCircularPlateDiameter(getPlateDiameter());
+        } else {
+            wizard->setPlateDimension(getPlateWidth(), getPlateHeight());
+        }
     }
+}
+
+bool MainWindow::isCircular()
+{
+    return ui->circularPlate->isChecked();
+}
+
+float MainWindow::getPlateDiameter()
+{
+    return ui->diameter->text().toFloat();
 }
 
 float MainWindow::getPlateWidth()
 {
-    if (ui->circularPlate->isChecked()) {
-        return ui->diameter->text().toFloat();
-    } else {
-        return ui->plateWidth->text().toFloat();
-    }
+    return ui->plateWidth->text().toFloat();
 }
 
 float MainWindow::getPlateHeight()
 {
-    if (ui->circularPlate->isChecked()) {
-        return ui->diameter->text().toFloat();
-    } else {
-        return ui->plateHeight->text().toFloat();
-    }
+    return ui->plateHeight->text().toFloat();
 }
 
 void MainWindow::on_outputDirectoryButton_clicked()
@@ -175,7 +182,13 @@ void MainWindow::on_runButton_clicked()
     if (enabled) {
         enableAll(false);
         increaseVerboseLevel();
-        worker.request.setPlateSize(getPlateWidth(), getPlateHeight());
+        if (isCircular()) {
+            worker.request.setPlateSize(getPlateDiameter(), getPlateDiameter());
+            worker.request.plateMode = PLATE_MODE_CIRCLE;
+        } else {
+            worker.request.setPlateSize(getPlateWidth(), getPlateHeight());
+            worker.request.plateMode = PLATE_MODE_RECTANGLE;
+        }
         worker.request.pattern = ui->outputDirectory->text().toStdString() + "/plate_%03d";
         worker.request.spacing = ui->spacing->text().toFloat()*1000;
         worker.request.precision = ui->precision->text().toFloat()*1000;
@@ -185,12 +198,6 @@ void MainWindow::on_runButton_clicked()
         worker.parts = ui->parts->toPlainText().toStdString();
         worker.request.plateDiameter = ui->diameter->text().toFloat()*1000;
         worker.request.nbThreads = ui->nbThreads->text().toInt();
-
-        if (ui->circularPlate->isChecked()) {
-            worker.request.plateMode = PLATE_MODE_CIRCLE;
-        } else {
-            worker.request.plateMode = PLATE_MODE_RECTANGLE;
-        }
 
         if (ui->singleSort->isChecked()) {
             worker.request.sortMode = REQUEST_SINGLE_SORT;
@@ -237,7 +244,11 @@ void MainWindow::on_worker_end()
                     delete platesViewer;
                 }
                 platesViewer = new PlatesViewer();
-                platesViewer->setPlateDimension(getPlateWidth(), getPlateHeight());
+                if (isCircular()) {
+                    platesViewer->setCircularPlateDiameter(getPlateDiameter());
+                } else {
+                    platesViewer->setPlateDimension(getPlateWidth(), getPlateHeight());
+                }
                 platesViewer->setPlates(worker.request.generatedFiles);
                 platesViewer->show();
             }

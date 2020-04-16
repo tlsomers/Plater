@@ -162,13 +162,25 @@ void Viewer::paintGL()
     glLineWidth(1.0);
     glColor3f(0.15, 0.15, 0.75);
     glBegin(GL_LINES);
-    for (float x=0; x<=plateWidth; x+=10.0) {
-        glVertex3f(x-plateWidth/2, -plateHeight/2, 0);
-        glVertex3f(x-plateWidth/2, plateHeight/2, 0);
-    }
-    for (float y=0; y<=plateHeight; y+=10.0) {
-        glVertex3f(-plateWidth/2, y-plateHeight/2, 0);
-        glVertex3f(plateWidth/2, y-plateHeight/2, 0);
+    if (circular) {
+        float radius = plateDiameter/2;
+        for (float x=-plateDiameter/2; x<=plateDiameter/2; x+=10.0) {
+            float dy = sqrt(radius*radius  - x*x);
+            glVertex3f(x, -dy, 0);
+            glVertex3f(x, +dy, 0);
+
+            glVertex3f(-dy, x, 0);
+            glVertex3f(dy, x, 0);
+        }
+    } else {
+        for (float x=0; x<=plateWidth; x+=10.0) {
+            glVertex3f(x-plateWidth/2, -plateHeight/2, 0);
+            glVertex3f(x-plateWidth/2, plateHeight/2, 0);
+        }
+        for (float y=0; y<=plateHeight; y+=10.0) {
+            glVertex3f(-plateWidth/2, y-plateHeight/2, 0);
+            glVertex3f(plateWidth/2, y-plateHeight/2, 0);
+        }
     }
     glEnd();
 
@@ -229,8 +241,15 @@ void Viewer::wheelEvent(QWheelEvent *evt)
 
 void Viewer::setPlateDimension(float width, float height)
 {
+    circular = false;
     plateWidth = width;
     plateHeight = height;
+}
+
+void Viewer::setCircularPlateDiameter(float diameter)
+{
+    circular = true;
+    plateDiameter = diameter;
 }
 
 void Viewer::timeOutSlot()

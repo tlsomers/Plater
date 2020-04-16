@@ -22,6 +22,7 @@ public:
 
     int getQuantity();
     void setPlateDimension(float width, float height);
+    void setCircularPlateDiameter(float diameter);
     
 private slots:
     void on_front_clicked();

@@ -19,6 +19,7 @@ public:
 
     void keyPressEvent(QKeyEvent *);
     void setPlateDimension(float width, float height);
+    void setCircularPlateDiameter(float diameter);
     void setPlates(std::vector<std::string> plates);
     void viewPlate();
     
