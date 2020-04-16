@@ -273,7 +273,11 @@ void MainWindow::on_wizard_accept()
         ui->parts->setText(parts);
     }
 
+#if QT_VERSION >= 0x050000
+    QMetaObject::invokeMethod(this, "wizardNext", Qt::QueuedConnection);
+#else
     QMetaObject::invokeMethod(this, &MainWindow::wizardNext, Qt::QueuedConnection);
+#endif
 }
 
 void MainWindow::on_saveButton_clicked()
