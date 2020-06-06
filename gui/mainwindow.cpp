@@ -284,10 +284,10 @@ void MainWindow::on_wizard_accept()
         ui->parts->setText(parts);
     }
 
-#if QT_VERSION >= 0x050000
-    QMetaObject::invokeMethod(this, "wizardNext", Qt::QueuedConnection);
-#else
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     QMetaObject::invokeMethod(this, &MainWindow::wizardNext, Qt::QueuedConnection);
+#else
+    QMetaObject::invokeMethod(this, "wizardNext", Qt::QueuedConnection);
 #endif
 }
 

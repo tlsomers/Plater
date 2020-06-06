@@ -26,6 +26,12 @@ public:
     void showError(std::string msg);
     void showSuccess(std::string msg);
     void showMessage(std::string msg);
+#if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
+    // MainWindow::wizardNext() is called indirectly via QMetaObject::invokeMethod().
+    // Versions of QT before 5.10 require the method to be specified as a string
+    // and registered as invokable.
+    Q_INVOKABLE
+#endif
     void wizardNext();
     bool isCircular();
     float getPlateDiameter();
