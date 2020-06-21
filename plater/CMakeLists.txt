@@ -67,4 +67,4 @@ if(MINGW)
 endif()
 target_link_libraries(plater libplater)
 
-install(TARGETS plater RUNTIME)
+install(TARGETS plater RUNTIME DESTINATION bin)

@@ -121,7 +121,7 @@ if(WIN32)
   endif()
 endif()
 
-install(TARGETS plater-gui RUNTIME)
+install(TARGETS plater-gui RUNTIME DESTINATION bin)
 if(MINGW)
   # install system DLL dependencies
   foreach(syslib

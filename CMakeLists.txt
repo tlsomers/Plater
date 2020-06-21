@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.6)
 project(Plater
   VERSION      1.1
   DESCRIPTION  "3D-printer parts placer and plate generator"
-  HOMEPAGE_URL "https://github.com/Rhoban/Plater"
   LANGUAGES    CXX
 )
 
@@ -18,11 +17,11 @@ add_subdirectory(gui)
 # Packaging
 include(GNUInstallDirs)
 set(CMAKE_INSTALL_DOCDIR ${CMAKE_INSTALL_DATAROOTDIR}/doc/plater)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE TYPE DOC)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE DESTINATION ${CMAKE_INSTALL_DOCDIR})
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git/index)
   find_package(Git REQUIRED)
   execute_process(
-    COMMAND           "${GIT_EXECUTABLE}" describe --long --tags
+    COMMAND           "${GIT_EXECUTABLE}" describe --always --long --tags
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     OUTPUT_VARIABLE   GIT_VERSION
     OUTPUT_STRIP_TRAILING_WHITESPACE
