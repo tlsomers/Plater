@@ -16,6 +16,8 @@ add_subdirectory(plater)
 add_subdirectory(gui)
 
 # Packaging
+include(GNUInstallDirs)
+set(CMAKE_INSTALL_DOCDIR ${CMAKE_INSTALL_DATAROOTDIR}/doc/plater)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE TYPE DOC)
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git/index)
   find_package(Git REQUIRED)
