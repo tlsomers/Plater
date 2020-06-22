@@ -1,8 +1,28 @@
-cmake_minimum_required(VERSION 2.8)
-project(plater)
-find_package (Threads)
+cmake_minimum_required(VERSION 3.6)
 
-set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -pthread")
+project(plater)
+
+if(MSVC)
+# Native MSVC build use static C runtime
+foreach(flag_var
+        CMAKE_C_FLAGS
+        CMAKE_C_FLAGS_DEBUG
+        CMAKE_C_FLAGS_RELEASE
+        CMAKE_C_FLAGS_MINSIZEREL
+        CMAKE_C_FLAGS_RELWITHDEBINFO
+        CMAKE_CXX_FLAGS
+        CMAKE_CXX_FLAGS_DEBUG
+        CMAKE_CXX_FLAGS_RELEASE
+        CMAKE_CXX_FLAGS_MINSIZEREL
+        CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+  string(REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+endforeach(flag_var)
+else()
+# strip release build
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
+endif()
+
+find_package(Threads)
 
 set(ALL_SOURCES
     stl/Point3.cpp
@@ -25,16 +45,26 @@ set(ALL_SOURCES
     sleep.cpp
     log.cpp
     util.cpp
-	wingetopt.cpp
-    )
+    wingetopt.cpp
+)
 
-include_directories("${CMAKE_SOURCE_DIR}/src")
+add_library(libplater STATIC ${ALL_SOURCES})
+if(MSVC)
+  target_compile_options(libplater PRIVATE /wd4244 /wd4267 /wd4305 /wd4307 /wd4996)
+else()
+  target_compile_options(libplater PRIVATE -std=c++11 -Wall -pedantic -Wno-reorder)
+endif()
 
-add_library(libplater ${ALL_SOURCES})
-
-target_link_libraries(libplater ${CMAKE_THREAD_LIBS_INIT})
+target_include_directories(libplater PUBLIC .)
+target_link_libraries(libplater PRIVATE Threads::Threads)
 
 add_executable(plater "main.cpp")
-target_link_libraries(plater libplater ${CMAKE_THREAD_LIBS_INIT})
+if(MSVC)
+  target_compile_options(plater PRIVATE /wd4244)
+endif()
+if(MINGW)
+  target_link_options(plater PRIVATE "-static")
+endif()
+target_link_libraries(plater libplater)
 
-install(TARGETS plater DESTINATION bin)
+install(TARGETS plater RUNTIME DESTINATION bin)

@@ -1,4 +1,4 @@
-#ifndef MSVC
+#if !defined(_MSC_VER)
 #include <unistd.h>
 #endif
 #ifdef WIN32
@@ -9,7 +9,7 @@
 
 void ms_sleep(long ms) {
 #ifdef WIN32
-	Sleep(ms);
+    Sleep(ms);
 #else
     usleep(1000 * ms);
 #endif
