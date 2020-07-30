@@ -23,8 +23,9 @@ void help()
     cerr << endl;
     cerr << "-h: Display this help" << endl;
     cerr << "-v: Verbose mode" << endl;
-    cerr << "-W width: Setting the plate width (default: 150mm)" << endl;
-    cerr << "-H height: Setting the plate height (default: 150mm)" << endl;
+    cerr << "The size of the bed plate (topview, 2D):" << endl;
+    cerr << "  -W width: Setting the plate width (default: 150mm)" << endl;
+    cerr << "  -H height: Setting the plate height (default: 150mm)" << endl;
     cerr << "-D diameter: Set the plate diameter, in mm. If set, this will put the plate in circular mode" << endl;
     cerr << "-j precision: Sets the precision (in mm, default: 0.5)" << endl;
     cerr << "-s spacing: Change the spacing between parts (in mm, default: 1.5)" << endl;

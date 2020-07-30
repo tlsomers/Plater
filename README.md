@@ -63,8 +63,9 @@ Here are the options:
 
 * `-v`, increase the verbosity, this will output more things on `stderr` during
   the placing of the parts
-* `-W width`, width of the plate, in mm (default `150`)
-* `-H height`, height of the plate, in mm (default `150`)
+* The size of the bedplate (in 2D, top view)
+    * `-W width`, width of the plate, in mm (default `150`)
+    * `-H height`, height of the plate, in mm (default `150`)
 * `-j precision`, precision, in mm (default `0.5`)
 * `-s spacing`, parts spacing, in mm (default `2`)
 * `-d delta`, sets the spacing of the brute forcing (see below), default `2`mm
