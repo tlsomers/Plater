@@ -34,7 +34,7 @@ namespace Plater
         model = model.putFaceOnPlate(orientation);
         bmp = new Bitmap*[bmps];
         bmp[0] = model.pixelize(precision, spacing);
-        surface = bmp[0]->width * bmp[0]->height;
+        surface = 0;
 
         Point3 minP = model.min();
         Point3 maxP = model.max();
@@ -53,6 +53,7 @@ namespace Plater
         for (int k=0; k<bmps; k++) {
             // Will this fit on the plate ?
             if (bmp[k]->width*precision < plateWidth && bmp[k]->height*precision < plateHeight) {
+                surface += bmp[k]->width * bmp[k]->height;
                 correct++;
             } else {
                 delete bmp[k];
@@ -60,6 +61,9 @@ namespace Plater
             }
         }
 
+        if (correct > 0) {
+            surface /= (float)correct;
+        }
         return correct;
     }
             
