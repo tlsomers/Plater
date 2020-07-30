@@ -101,20 +101,22 @@ namespace Plater
             for (int r=(rotateDirection ? rs-1 : 0); rotateDirection ? r>=0 : r<rs; rotateDirection ? r-- : r++) {
                 int vr = (r+rotateOffset)%rs;
                 part->setRotation(vr);
-                for (float x=0; x<plate->width; x+=request->delta) {
-                    for (float y=0; y<plate->height; y+=request->delta) {
-                        float gx = part->getGX()+x;
-                        float gy = part->getGY()+y;
-                        float score = gy*yCoef+gx*xCoef;
+                if (part->getBmp() != NULL) {
+                    for (float x=0; x<plate->width; x+=request->delta) {
+                        for (float y=0; y<plate->height; y+=request->delta) {
+                            float gx = part->getGX()+x;
+                            float gy = part->getGY()+y;
+                            float score = gy*yCoef+gx*xCoef;
 
-                        if (!found || score < betterScore) {
-                            part->setOffset(x, y);
-                            if (plate->canPlace(part)) {
-                                found = true;
-                                betterX = x;
-                                betterY = y;
-                                betterScore = score;
-                                betterR = vr;
+                            if (!found || score < betterScore) {
+                                part->setOffset(x, y);
+                                if (plate->canPlace(part)) {
+                                    found = true;
+                                    betterX = x;
+                                    betterY = y;
+                                    betterScore = score;
+                                    betterR = vr;
+                                }
                             }
                         }
                     }

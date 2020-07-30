@@ -13,7 +13,8 @@ namespace Plater
             Part();
             virtual ~Part();
 
-            void load(std::string filename, float precision, float deltaR, float spacing, string orientation);
+            int load(std::string filename, float precision, float deltaR, float spacing, string orientation,
+                float plateWidth, float plateHeight);
             std::string getFilename();
 
             Model model;
@@ -27,6 +28,7 @@ namespace Plater
 
             float width;
             float height;
+            float surface;
 
             int bmps;
             Bitmap **bmp;

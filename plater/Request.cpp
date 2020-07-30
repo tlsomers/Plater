@@ -71,14 +71,14 @@ namespace Plater
             if (filename != "" && quantity != 0) {
                 _log("- Loading %s (quantity %d, orientation %s)...\n", filename.c_str(), quantity, orientation.c_str());
                 parts[filename] = new Part;
-                parts[filename]->load(filename, precision, deltaR, spacing, orientation);
+                int loaded = 
+                    parts[filename]->load(filename, precision, deltaR, spacing, orientation, plateWidth, plateHeight);
                 quantities[filename] = quantity;
 
-                // TODO: something smarter here
-                if ((parts[filename]->width > plateWidth || parts[filename]->height > plateHeight)
-                 && (parts[filename]->height > plateWidth || parts[filename]->width > plateHeight)) {
+                if (loaded == 0) {
                     ostringstream oss;
-                    oss << "Part " << filename << " is too big for the plate";
+                    oss << "Part " << filename << " is too big for the plate ";
+                    oss << " (bed too small? try more angles?)";
                     error = oss.str();
                     hasError = true;
                 }

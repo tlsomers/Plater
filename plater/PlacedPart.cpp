@@ -44,12 +44,14 @@ namespace Plater
         float score = 0;
         for (int i=0; i<part->bmps; i++) {
             Bitmap *bmp = part->bmp[i];
-            float gX = bmp->sX/(float)bmp->pixels;
-            float gY = bmp->sY/(float)bmp->pixels;
-            float s = gX*gX+gY*gY;
-            if (!hasScore || s<score) {
-                score = s;
-                hasScore = true;
+            if (bmp != NULL) {
+                float gX = bmp->sX/(float)bmp->pixels;
+                float gY = bmp->sY/(float)bmp->pixels;
+                float s = gX*gX+gY*gY;
+                if (!hasScore || s<score) {
+                    score = s;
+                    hasScore = true;
+                }
             }
         }
 
