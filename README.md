@@ -90,7 +90,7 @@ Each line begins with a part name, followed by the quantity, and optionally the 
 that should be on the plate. The side can be `bottom` (default, you can also put
 nothing), `front`, `top`, `back`, `left` or `right.
 
-You can put comment lines begining with `#`, it can be useful to add some advices
+You can put comment lines beginning with `#`, it can be useful to add some advices
 on how generate your plate or some copyrights.
 
 The file should be described relatively to the `plater.conf` file.
@@ -111,7 +111,7 @@ Then, the placer tries to put each part one by one on the plate, brute forcing
 position to maximize a score based on a simple gravity-like property, which tend to
 pack the parts. If it can't place the part, it try adding a new plate and so on.
 
-It is runned multiple times with multiple parameters, and the best solution, i.e the
+It is running multiple times with multiple parameters, and the best solution, i.e the
 one with the less plates is kept.
 
 Note that the result can be bad in some limit cases, and it will not replace your
