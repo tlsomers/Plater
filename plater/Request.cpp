@@ -36,7 +36,8 @@ namespace Plater
         cancel(false),
         solution(NULL),
         nbThreads(1),
-        platesInfo(false)
+        platesInfo(false),
+        outDir(".")
     {
     }
 
@@ -221,7 +222,7 @@ namespace Plater
 
     void Request::writePlatesInfo(Solution *solution)
     {
-        std::ofstream ofs("plates.csv");
+        std::ofstream ofs(outDir + "/plates.csv");
 
         ofs << "plate,part,posX,posY,rotation" << std::endl;
 

@@ -207,6 +207,7 @@ void MainWindow::on_runButton_clicked()
             worker.request.setPlateSize(getPlateWidth(), getPlateHeight());
             worker.request.plateMode = PLATE_MODE_RECTANGLE;
         }
+        worker.request.outDir = ui->outputDirectory->text().toStdString();
         worker.request.pattern = ui->outputDirectory->text().toStdString() + "/plate_%03d";
         worker.request.spacing = ui->spacing->text().toFloat()*1000;
         worker.request.precision = ui->precision->text().toFloat()*1000;

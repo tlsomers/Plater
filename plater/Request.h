@@ -53,6 +53,8 @@ namespace Plater
             float spacing;
             // Output file pattern
             std::string pattern;
+            // Output file directory
+            std::string outDir;
 
             void writeFiles(Solution *solution);
             void writeSTL(Plate *plate, const char *filename);
